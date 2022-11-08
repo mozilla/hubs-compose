@@ -13,3 +13,5 @@ RUN apk add --no-cache\
     inotify-tools
 COPY files/dev-perms.pem /etc/perms.pem
 WORKDIR /code
+
+RUN apk add bash tree # Not necessary. Added for convenience

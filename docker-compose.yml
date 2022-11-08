@@ -7,8 +7,6 @@ services:
       test: ["CMD", "pg_isready"]
     image: "postgres:14-alpine"
     user: postgres
-    volumes:
-      - pgdata:/var/lib/postgresql/data
   dialog:
     build:
       context: .
@@ -22,8 +20,6 @@ services:
       INTERACTIVE: "false"
     ports:
       - "4443:4443"
-    volumes:
-      - dialog:/code
     working_dir: /code
   hubs-admin:
     build:
@@ -37,8 +33,6 @@ services:
       test: ["CMD", "curl", "-fk", "https://localhost:8989/admin.html"]
     ports:
       - "8989:8989"
-    volumes:
-      - hubs:/code
     working_dir: /code/admin
   hubs-client:
     build:
@@ -53,8 +47,6 @@ services:
       test: ["CMD", "curl", "-fk", "https://localhost:8080"]
     ports:
       - "8080:8080"
-    volumes:
-      - hubs:/code
     working_dir: /code
   hubs-storybook:
     build:
@@ -66,8 +58,6 @@ services:
       test: ["CMD", "curl", "-fk", "http://hubs.local:6006"]
     ports:
       - "6006:6006"
-    volumes:
-      - hubs:/code
     working_dir: /code
   postgrest:
     build:
@@ -94,9 +84,6 @@ services:
       SPOKE_INTERNAL_HOSTNAME: spoke
     ports:
       - "4000:4000"
-    volumes:
-      - reticulum:/code
-      - retstorage:/code/storage/dev
   spoke:
     build:
       context: .
@@ -108,47 +95,7 @@ services:
       INTERNAL_HOSTNAME: spoke
     ports:
       - "9090:9090"
-    volumes:
-      - spoke:/code
+
 networks:
   default:
     name: mozilla-hubs
-volumes:
-  dialog:
-  hubs:
-  pgdata:
-  reticulum:
-  retstorage:
-  spoke:
-x-mutagen:
-  sync:
-    defaults:
-      ignore:
-        paths:
-          - ".DS_Store"
-          - ".gitignore"
-          - "/certs/"
-          - "/node_modules/"
-        vcs: true
-      mode: "two-way-resolved"
-    dialog:
-      alpha: ./services/dialog
-      beta: "volume://dialog"
-    hubs:
-      alpha: ./services/hubs
-      beta: "volume://hubs"
-      ignore:
-        paths:
-          - "/admin/certs/"
-          - "/admin/node_modules/"
-    reticulum:
-      alpha: ./services/reticulum
-      beta: "volume://reticulum"
-      ignore:
-        paths:
-          - "/_build/"
-          - "/bin/"
-          - "/storage/"
-    spoke:
-      alpha: ./services/spoke
-      beta: "volume://spoke"

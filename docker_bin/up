@@ -1,0 +1,13 @@
+#!/bin/bash
+basedir=$(dirname "$0")/..
+
+# docker compose \
+#   -f "$basedir/docker-compose.yml" \
+#   -f "$basedir/dockerfiles/use-bind-mounts.yml" \
+#   up --detach
+
+docker compose \
+  -f "$basedir/docker-compose.yml" \
+  -f "$basedir/dockerfiles/use-bind-mounts.yml" \
+  -f "$basedir/dockerfiles/sleep-reticulum.yml" \
+  up --detach
