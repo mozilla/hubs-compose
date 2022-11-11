@@ -44,6 +44,7 @@ prompts:
 * [8989: Hubs Admin](https://hubs.local:8989)
 * [8080: Hubs Client](https://hubs.local:8080)
 * [4000: Reticulum](https://hubs.local:4000)
+* [5349: Coturn](https://hubs.local:5349)
 
 ### Admin panel access
 
