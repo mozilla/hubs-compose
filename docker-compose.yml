@@ -47,10 +47,12 @@ services:
       HTTPS_CERT_FULLCHAIN: /etc/ssl/fullchain.pem
       HTTPS_CERT_PRIVKEY: /etc/ssl/privkey.pem
       INTERACTIVE: "false"
+      ADMIN_LISTEN_PORT: 7001
       MEDIASOUP_MIN_PORT: 40000
       MEDIASOUP_MAX_PORT: 40050
       MEDIASOUP_ANNOUNCED_IP: 10.20.30.12
     ports:
+      - "7001:7001"
       - "4443:4443"
       # This should be the same as MEDIASOUP_MIN_PORT and MEDIASOUP_MAX_PORT
       # You might neeed to increase this number depending on how many client you are connecting.
